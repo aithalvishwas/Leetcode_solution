@@ -1,0 +1,38 @@
+class Solution {
+    int maxPath=0;
+    public int longestPath(int[] parent, String s){
+        List<List<Integer>> adj = new ArrayList<>(parent.length);
+        for(int i=0;i<parent.length;i++)
+            adj.add(new ArrayList<Integer>());
+        for(int i=1;i<parent.length;i++){
+            adj.get(parent[i]).add(i);
+        }
+        dfs(-1,0,adj,s);
+        
+        return maxPath+1;
+    }
+
+    public int dfs(int parent,int child,List<List<Integer>> adj,String s){
+        int max1=0;
+        int max2=0;
+        for(int x:adj.get(child)){
+            if(x!=parent){
+                int len=dfs(child,x,adj,s);
+                if(s.charAt(x)==s.charAt(child)){
+                    len =0;
+                }else{
+                    len +=1; 
+                }                
+                if(len>=max1){
+                    max2=max1;
+                    max1=len;
+                }
+                else if(len>=max2)
+                    max2=len;
+            }
+        }
+        maxPath = Math.max(maxPath,max1+max2);
+         
+        return max1;
+    }
+}2246. Longest Path With Different Adjacent Characters
