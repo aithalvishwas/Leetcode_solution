@@ -1,0 +1,25 @@
+class Solution {
+    public List<String> restoreIpAddresses(String s) {
+        List<String> ans = new ArrayList();
+        if(s.length()>12){
+            return ans;
+        }
+        String temp = "";
+        back(s,temp,0,0,ans);
+        return ans;
+    }
+    void back(String s, String temp,int index,int dots,List<String>ans){
+        if(dots==4 && index==s.length()){
+            ans.add(temp.substring(0,temp.length()-1));
+            return;
+        }
+        if(dots>4){
+            return;
+        }
+        for(int i=index;i<(Math.min((3+index),s.length()));i++){
+            if(Integer.parseInt(s.substring(index,i+1))<256 && (i==index || s.charAt(index)!='0')){
+                back(s,(temp+s.substring(index,i+1)+"."),i+1,dots+1,ans);
+            }
+        }
+    }
+}
