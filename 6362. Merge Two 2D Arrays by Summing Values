@@ -1,0 +1,21 @@
+class Solution {
+    public int[][] mergeArrays(int[][] nums1, int[][] nums2) {
+        Map<Integer, Integer> Msum = new HashMap<>();
+        for (int[][] nums : new int[][][]{nums1, nums2}) {
+            for (int[] pair : nums) {
+                int id = pair[0];
+                int value = pair[1];
+                Msum.put(id, Msum.getOrDefault(id, 0) + value);
+            }
+        }
+        int[][] result = new int[Msum.size()][2];
+        int i = 0;
+        for (Map.Entry<Integer, Integer> entry : Msum.entrySet()) {
+            result[i][0] = entry.getKey();
+            result[i][1] = entry.getValue();
+            i++;
+        }
+        Arrays.sort(result, (a, b) -> Integer.compare(a[0], b[0]));
+        return result;
+    }
+}
