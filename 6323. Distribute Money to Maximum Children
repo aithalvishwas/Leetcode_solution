@@ -1,0 +1,31 @@
+public class Solution {
+    public int distMoney(int money, int children) {
+        if (children > money) {
+            return -1;
+        }
+        if (money < 8) {
+            return 0;
+        }
+        int d = money / 8;
+        int mod = money % 8;
+        if (d == children && mod == 0) {
+            return children;
+        }
+        if (d >= children) {
+            return children - 1;
+        }
+        if (mod == 4 && (children - d) == 1) {
+            return children - 2;
+        }
+        if (mod >= (children - d)) {
+            return d;
+        }
+        int left = children - d;
+        while (mod < left) {
+            left++;
+            mod += 8;
+            d--;
+        }
+        return d;
+    }
+}
